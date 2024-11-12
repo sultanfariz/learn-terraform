@@ -9,6 +9,12 @@ terraform {
   }
 }
 
+variable global_ip {
+  type        = string
+  default     = "0.0.0.0/0"
+  description = "Global IP address"
+}
+
 provider "google" {
   project = "bunder-432813"
   region  = "us-central1"
@@ -37,7 +43,7 @@ resource "google_compute_firewall" "allow_internal" {
     ports    = ["0-65535"]
   }
 
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = [var.global_ip]
 }
 
 resource "google_compute_firewall" "allow_ssh" {
@@ -49,7 +55,7 @@ resource "google_compute_firewall" "allow_ssh" {
     ports    = ["22"]
   }
 
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = [var.global_ip]
 }
 
 resource "google_compute_firewall" "allow_http" {
@@ -61,7 +67,7 @@ resource "google_compute_firewall" "allow_http" {
     ports    = ["80"]
   }
 
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = [var.global_ip]
 }
 
 resource "google_compute_firewall" "allow_https" {
@@ -73,7 +79,7 @@ resource "google_compute_firewall" "allow_https" {
     ports    = ["443"]
   }
 
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = [var.global_ip]
 }
 
 
@@ -89,7 +95,7 @@ resource "google_compute_instance" "vm_instance" {
   }
 
   network_interface {
-    network = "default"
+    network = google_compute_network.vpc_network.name
     access_config {}
   }
 }
