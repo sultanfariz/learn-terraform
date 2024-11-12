@@ -31,3 +31,5 @@ terraform.tfvars
 *.swp
 *.tmp
 *.temp
+
+test

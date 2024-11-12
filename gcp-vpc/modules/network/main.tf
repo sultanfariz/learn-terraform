@@ -1,5 +1,3 @@
-# main.tf
-
 terraform {
   required_providers {
     google = {
@@ -9,20 +7,28 @@ terraform {
   }
 }
 
-variable global_ip {
-  type        = string
-  default     = "0.0.0.0/0"
-  description = "Global IP address"
-}
-
 provider "google" {
   project = "bunder-432813"
-  region  = "us-central1"
-  zone    = "us-central1-a"
+  region  = var.region
+  zone    = var.zone
 }
 
 resource "google_compute_network" "vpc_network" {
-  name = "terraform-network"
+  name = "terraform-network2"
+}
+
+resource "google_compute_subnetwork" "subnet" {
+  name          = "subnet-1"
+  ip_cidr_range = "10.0.1.0/24"
+  network       = google_compute_network.vpc_network.name
+  region        = var.zone
+}
+
+resource "google_compute_subnetwork" "subnet2" {
+  name          = "subnet-2"
+  ip_cidr_range = "10.0.2.0/24"
+  network       = google_compute_network.vpc_network.name
+  region        = var.zone
 }
 
 resource "google_compute_firewall" "allow_internal" {
@@ -43,19 +49,7 @@ resource "google_compute_firewall" "allow_internal" {
     ports    = ["0-65535"]
   }
 
-  source_ranges = [var.global_ip]
-}
-
-resource "google_compute_firewall" "allow_ssh" {
-  name    = "allow-ssh"
-  network = google_compute_network.vpc_network.name
-
-  allow {
-    protocol = "tcp"
-    ports    = ["22"]
-  }
-
-  source_ranges = [var.global_ip]
+  source_ranges = [var.ip_range]
 }
 
 resource "google_compute_firewall" "allow_http" {
@@ -67,7 +61,7 @@ resource "google_compute_firewall" "allow_http" {
     ports    = ["80"]
   }
 
-  source_ranges = [var.global_ip]
+  source_ranges = [var.ip_range]
 }
 
 resource "google_compute_firewall" "allow_https" {
@@ -79,24 +73,5 @@ resource "google_compute_firewall" "allow_https" {
     ports    = ["443"]
   }
 
-  source_ranges = [var.global_ip]
-}
-
-
-# vm instances
-resource "google_compute_instance" "vm_instance" {
-  name         = "test-vm"
-  machine_type = "f1-micro"
-  allow_stopping_for_update = true
-
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-11"
-    }
-  }
-
-  network_interface {
-    network = google_compute_network.vpc_network.name
-    access_config {}
-  }
+  source_ranges = [var.ip_range]
 }
