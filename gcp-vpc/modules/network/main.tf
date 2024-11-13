@@ -21,14 +21,14 @@ resource "google_compute_subnetwork" "subnet" {
   name          = "subnet-1"
   ip_cidr_range = "10.0.1.0/24"
   network       = google_compute_network.vpc_network.name
-  region        = var.zone
+  region        = var.region
 }
 
 resource "google_compute_subnetwork" "subnet2" {
   name          = "subnet-2"
   ip_cidr_range = "10.0.2.0/24"
   network       = google_compute_network.vpc_network.name
-  region        = var.zone
+  region        = var.region
 }
 
 resource "google_compute_firewall" "allow_internal" {
