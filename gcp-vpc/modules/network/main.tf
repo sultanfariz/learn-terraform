@@ -8,13 +8,13 @@ terraform {
 }
 
 provider "google" {
-  project = "bunder-432813"
+  project = var.project_id
   region  = var.region
   zone    = var.zone
 }
 
 resource "google_compute_network" "vpc_network" {
-  name = "terraform-network2"
+  name = "terraform-network"
 }
 
 resource "google_compute_subnetwork" "subnet" {
@@ -71,6 +71,18 @@ resource "google_compute_firewall" "allow_https" {
   allow {
     protocol = "tcp"
     ports    = ["443"]
+  }
+
+  source_ranges = [var.ip_range]
+}
+
+resource "google_compute_firewall" "allow_ssh" {
+  name    = "allow-ssh"
+  network = google_compute_network.vpc_network.name
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
   }
 
   source_ranges = [var.ip_range]

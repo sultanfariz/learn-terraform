@@ -16,6 +16,12 @@ variable zone {
   description = "Zone for the network"
 }
 
+variable "instance_type" {
+  type        = string
+  default     = "f1-micro"
+  description = "Instance type"
+}
+
 variable "project_id" {
   type        = string
   description = "The project ID"
