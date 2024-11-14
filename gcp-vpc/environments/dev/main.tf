@@ -32,6 +32,7 @@ module "compute" {
     # Input variables for the compute module
     instance_type = "f1-micro"
     project_id    = var.project_id
+    vpc_network   = module.network.vpc_network
     
 
     # # Other compute-specific inputs
@@ -45,10 +46,10 @@ module "compute" {
 #     environment = "dev"
 # }
 
-# # Output values for convenience
-# output "vpc_id" {
-#     value = module.network.vpc_id
-# }
+# Output values for convenience
+output "vpc_id" {
+    value = module.network.vpc_network
+}
 
 # output "public_subnet_ids" {
 #     value = module.network.public_subnet_ids

@@ -1,10 +1,3 @@
-module "network" {
-    source = "../network"
-    # Add any required variables for the source module
-    project_id = var.project_id
-    region     = var.region
-    zone       = var.zone
-}
 
 terraform {
   required_providers {
@@ -24,7 +17,7 @@ provider "google" {
 resource "google_compute_instance" "vm_instance" {
   name         = "vm-instance"
   machine_type = var.instance_type
-  zone         = module.network.zone
+  zone         = var.zone
 
   boot_disk {
     initialize_params {
@@ -33,7 +26,7 @@ resource "google_compute_instance" "vm_instance" {
   }
 
   network_interface {
-    network = module.network.vpc_network
+    network = var.vpc_network
     access_config {}
   }
 }

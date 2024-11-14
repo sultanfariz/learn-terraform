@@ -6,7 +6,7 @@ variable ip_range {
 
 variable region {
   type        = string
-  default     = "us-central"
+  default     = "us-central1"
   description = "Region for the network"
 }
 
@@ -25,4 +25,9 @@ variable "instance_type" {
 variable "project_id" {
   type        = string
   description = "The project ID"
+}
+
+variable "vpc_network" {
+  description = "The VPC network to which the instances will be connected"
+  type        = string
 }

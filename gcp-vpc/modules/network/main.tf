@@ -14,7 +14,7 @@ provider "google" {
 }
 
 resource "google_compute_network" "vpc_network" {
-  name = "terraform-network"
+  name = "net1"
 }
 
 resource "google_compute_subnetwork" "subnet" {
