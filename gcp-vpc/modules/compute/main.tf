@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     google = {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
       version = "6.10.0"
     }
   }
@@ -29,4 +29,5 @@ resource "google_compute_instance" "vm_instance" {
     network = var.vpc_network
     access_config {}
   }
+
 }
