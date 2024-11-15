@@ -32,3 +32,13 @@ output "net2" {
   description = "VPC network name"
   depends_on  = []
 }
+
+output "peering_status" {
+  value = [
+    google_compute_network_peering.peer1.state,
+    google_compute_network_peering.peer2.state
+  ]
+  sensitive   = true
+  description = "VPC peering status"
+  depends_on  = []
+}

@@ -46,13 +46,13 @@ module "compute" {
 # }
 
 # Output values for convenience
-output "vpc1" {
-  value = module.network.net1
-}
+# output "vpc1" {
+#   value = module.network.net1
+# }
 
-output "vpc2" {
-  value = module.network.net2
-}
+# output "vpc2" {
+#   value = module.network.net2
+# }
 
 output "vpc1_name" {
   value = module.network.net1.name
@@ -68,6 +68,10 @@ output "vpc1_id" {
 
 output "vpc2_id" {
   value = module.network.net2.id
+}
+
+output "peering_status" {
+  value = module.network.peering_status
 }
 
 # output "public_subnet_ids" {
