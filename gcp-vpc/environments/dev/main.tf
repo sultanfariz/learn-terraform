@@ -26,7 +26,7 @@ module "network" {
   # environment = "dev"
 }
 
-# Call the compute module (e.g., for EC2 instances)
+# Call the compute module 
 module "compute" {
   source = "../../modules/compute"
   # Input variables for the compute module
@@ -38,9 +38,9 @@ module "compute" {
   # environment = "dev"
 }
 
-# # Call the data module (e.g., for S3 buckets)
-# module "data" {
-#     source = "../../modules/data"
-#     bucket_name = "dev-bucket"
-#     environment = "dev"
-# }
+# Call the data module 
+module "data" {
+  source = "../../modules/data"
+  # bucket_name = "tf-state-bucket"
+  # environment = "dev"
+}
