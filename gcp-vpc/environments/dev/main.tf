@@ -40,7 +40,8 @@ module "compute" {
 
 # Call the data module 
 module "data" {
-  source = "../../modules/data"
+  source     = "../../modules/data"
+  project_id = var.project_id
   # bucket_name = "tf-state-bucket"
   # environment = "dev"
 }
